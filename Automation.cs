@@ -24,22 +24,93 @@ namespace Automation
         private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
         [DllImport("user32.dll")]
         private static extern bool SetForegroundWindow(IntPtr hWnd);
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
         private IntPtr hWnd = IntPtr.Zero;
         private StringBuilder strResult = new StringBuilder();
-        private const int tDelay = 100;
         private void BtnRun_Click(object sender, EventArgs e)
         {
-            SelectApplication();
-            SelectFirstItemOnFlop();
+            try
+            {
+                strResult.Clear();
+                SelectApplication();
+
+                SelectFirstItemOnFlop();
+                SendKeys.SendWait("{DOWN}");
+                CopyAbsStrategy();
+                SendKeys.SendWait("{RIGHT}");
+                CopyAbsStrategyFromFlop();
+
+                TBResult.Text = strResult.ToString();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+        }
+        private void CopyAbsStrategyFromFlop()
+        {
+            int x = 200, y = 700;
+            for (int i = 0; i < 3; i++)
+            {
+                x = 200;
+                for (int j = 0; j < 13; j++)
+                {
+                    SelectSecondItemOnFlop();
+                    CopyAbsStrategy();
+                    SelectTurnCard();
+
+                    SelectFirstItemOnTurn();
+                    SendKeys.SendWait("{DOWN}");
+                    CopyAbsStrategy();
+                    SendKeys.SendWait("{RIGHT}");
+                    CopyAbsStrategyFromTurn();
+                    x += 50;
+                }
+                y += 70;
+            }
+        }
+        private void CopyAbsStrategyFromTurn()
+        {
+            int x = 250, y = 700;
+            for(int i = 0; i < 3; i++)
+            {
+                x = 250;
+                for(int j = 0; j < 13; j++)
+                {
+                    SelectSecondItemOnTurn();
+                    CopyAbsStrategy();
+                    SelectRiverCard(x, y);
+
+                    CalculateRiver();
+
+                    SelectFirstItemOnRiver();
+                    CopyAbsStrategyFromRiver();
+                    x += 50;
+                }
+                y += 70;
+            }
+        }
+        private void CopyAbsStrategyFromRiver()
+        {
             SendKeys.SendWait("{DOWN}");
             CopyAbsStrategy();
             SendKeys.SendWait("{RIGHT}");
             SendKeys.SendWait("{DOWN}");
-            ClickOnPointTool.ClickOnPoint(hWnd, new Point(200, 780));       // set focus to tree view by mouse left click
-            Thread.Sleep(tDelay);
             CopyAbsStrategy();
-            TBResult.Text = strResult.ToString();
-            SelectFourthCard();
+            SendKeys.SendWait("{DOWN}");
+            SendKeys.SendWait("{RIGHT}");
+            SendKeys.SendWait("{DOWN}");
+            CopyAbsStrategy();
+            for(int i = 0; i < 11; i++)
+            {
+                SendKeys.SendWait("{DOWN}");
+                SendKeys.SendWait("{DOWN}");
+                SendKeys.SendWait("{RIGHT}");
+                SendKeys.SendWait("{DOWN}");
+                CopyAbsStrategy();
+            }
         }
         private void SelectApplication()
         {
@@ -62,31 +133,72 @@ namespace Automation
         }
         private void CopyAbsStrategy()
         {
+            if(hWnd != GetForegroundWindow())
+            {
+                throw new Exception("Application not focused");
+            }
             SendKeys.SendWait("^+{F10}");
             SendKeys.SendWait("{DOWN}");
             SendKeys.SendWait("{DOWN}");
             SendKeys.SendWait("{DOWN}");
             SendKeys.SendWait("{DOWN}");
             SendKeys.SendWait("{ENTER}");                                   // select 4th item on context menu - that's "Copy Abs. Strategy"
-            Thread.Sleep(tDelay);                                              // need to wait for copy data to clipboard
+            Delay();                                              // need to wait for copy data to clipboard
             strResult.AppendLine(Clipboard.GetText());
             strResult.AppendLine();
         }
         private void SelectFirstItemOnFlop()
         {
-            ClickOnPointTool.ClickOnPoint(hWnd, new Point(200, 750));       // set focus to tree view by mouse left click
-            Thread.Sleep(tDelay);
+            ClickOnPointTool.ClickOnPoint(hWnd, new Point(200, 750));
+            Delay();
         }
-        private void SelectFourthCard()
+        private void SelectSecondItemOnFlop()
+        {
+            ClickOnPointTool.ClickOnPoint(hWnd, new Point(200, 780));
+            Delay();
+        }
+        private void SelectFirstItemOnTurn()
+        {
+            ClickOnPointTool.ClickOnPoint(hWnd, new Point(600, 750));
+            Delay();
+        }
+        private void SelectSecondItemOnTurn()
+        {
+            ClickOnPointTool.ClickOnPoint(hWnd, new Point(600, 780));
+            Delay();
+        }
+        private void SelectFirstItemOnRiver()
+        {
+            ClickOnPointTool.ClickOnPoint(hWnd, new Point(1000, 750));
+            Delay();
+        }
+        private void SelectTurnCard()
         {
             ClickOnPointTool.ClickOnPoint(hWnd, new Point(200, 600));
-            Thread.Sleep(tDelay);
+            Delay();
             ClickOnPointTool.ClickOnPoint(hWnd, new Point(200, 700), false);
-            Thread.Sleep(tDelay);
+            Delay();
             ClickOnPointTool.ClickOnPoint(hWnd, new Point(200, 550));
-            Thread.Sleep(tDelay);
+            Delay(3);
         }
-
+        private void SelectRiverCard(int x, int y)
+        {
+            ClickOnPointTool.ClickOnPoint(hWnd, new Point(250, 600));
+            Delay();
+            ClickOnPointTool.ClickOnPoint(hWnd, new Point(x, y), false);
+            Delay();
+            ClickOnPointTool.ClickOnPoint(hWnd, new Point(200, 550));
+            Delay(3);
+        }
+        private void CalculateRiver()
+        {
+            ClickOnPointTool.ClickOnPoint(hWnd, new Point(1100, 670));
+            Thread.Sleep(Convert.ToInt32(NUDDelayRiver.Value));
+        }
+        private void Delay(int scale = 1)
+        {
+            Thread.Sleep(Convert.ToInt32(NUDDelay.Value) * scale);
+        }
         public class ClickOnPointTool
         {
 
@@ -163,7 +275,6 @@ namespace Automation
             }
 
         }
-
         private void TBResult_KeyDown(object sender, KeyEventArgs e)
         {
         }
