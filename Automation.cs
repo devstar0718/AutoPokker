@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -40,14 +41,14 @@ namespace Automation
                 CopyAbsStrategy();
                 SendKeys.SendWait("{RIGHT}");
                 CopyAbsStrategyFromFlop();
-
-                TBResult.Text = strResult.ToString();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                return;
             }
+
+            File.WriteAllText("Result.txt", strResult.ToString());
+            TBResult.Text = strResult.ToString();
         }
         private void CopyAbsStrategyFromFlop()
         {
@@ -59,7 +60,7 @@ namespace Automation
                 {
                     SelectSecondItemOnFlop();
                     CopyAbsStrategy();
-                    SelectTurnCard();
+                    SelectTurnCard(x, y);
 
                     SelectFirstItemOnTurn();
                     SendKeys.SendWait("{DOWN}");
@@ -82,6 +83,7 @@ namespace Automation
                     SelectSecondItemOnTurn();
                     CopyAbsStrategy();
                     SelectRiverCard(x, y);
+                    SelectSecondItemOnTurn();
 
                     CalculateRiver();
 
@@ -143,61 +145,61 @@ namespace Automation
             SendKeys.SendWait("{DOWN}");
             SendKeys.SendWait("{DOWN}");
             SendKeys.SendWait("{ENTER}");                                   // select 4th item on context menu - that's "Copy Abs. Strategy"
-            Delay();                                              // need to wait for copy data to clipboard
+            Thread.Sleep(Convert.ToInt32(NUDDelayCopy.Value));                                              // need to wait for copy data to clipboard
             strResult.AppendLine(Clipboard.GetText());
             strResult.AppendLine();
         }
         private void SelectFirstItemOnFlop()
         {
             ClickOnPointTool.ClickOnPoint(hWnd, new Point(200, 750));
-            Delay();
+            DelayForMouseSelection();
         }
         private void SelectSecondItemOnFlop()
         {
             ClickOnPointTool.ClickOnPoint(hWnd, new Point(200, 780));
-            Delay();
+            DelayForMouseSelection();
         }
         private void SelectFirstItemOnTurn()
         {
             ClickOnPointTool.ClickOnPoint(hWnd, new Point(600, 750));
-            Delay();
+            DelayForMouseSelection();
         }
         private void SelectSecondItemOnTurn()
         {
             ClickOnPointTool.ClickOnPoint(hWnd, new Point(600, 780));
-            Delay();
+            DelayForMouseSelection();
         }
         private void SelectFirstItemOnRiver()
         {
             ClickOnPointTool.ClickOnPoint(hWnd, new Point(1000, 750));
-            Delay();
+            DelayForMouseSelection();
         }
-        private void SelectTurnCard()
+        private void SelectTurnCard(int x, int y)
         {
             ClickOnPointTool.ClickOnPoint(hWnd, new Point(200, 600));
-            Delay();
-            ClickOnPointTool.ClickOnPoint(hWnd, new Point(200, 700), false);
-            Delay();
+            DelayForMouseSelection();
+            ClickOnPointTool.ClickOnPoint(hWnd, new Point(x, y), true, false);
+            DelayForMouseSelection();
             ClickOnPointTool.ClickOnPoint(hWnd, new Point(200, 550));
-            Delay(3);
+            DelayForMouseSelection();
         }
         private void SelectRiverCard(int x, int y)
         {
             ClickOnPointTool.ClickOnPoint(hWnd, new Point(250, 600));
-            Delay();
-            ClickOnPointTool.ClickOnPoint(hWnd, new Point(x, y), false);
-            Delay();
+            DelayForMouseSelection();
+            ClickOnPointTool.ClickOnPoint(hWnd, new Point(x, y), true, false);
+            DelayForMouseSelection();
             ClickOnPointTool.ClickOnPoint(hWnd, new Point(200, 550));
-            Delay(3);
+            DelayForMouseSelection();
         }
         private void CalculateRiver()
         {
             ClickOnPointTool.ClickOnPoint(hWnd, new Point(1100, 670));
             Thread.Sleep(Convert.ToInt32(NUDDelayRiver.Value));
         }
-        private void Delay(int scale = 1)
+        private void DelayForMouseSelection(int scale = 1)
         {
-            Thread.Sleep(Convert.ToInt32(NUDDelay.Value) * scale);
+            Thread.Sleep(Convert.ToInt32(NUDDelayMouse.Value) * scale);
         }
         public class ClickOnPointTool
         {
@@ -235,7 +237,7 @@ namespace Automation
 #pragma warning restore 649
 
 
-            public static void ClickOnPoint(IntPtr wndHandle, Point clientPoint, bool mouseUp = true, bool leftButton = true)
+            public static void ClickOnPoint(IntPtr wndHandle, Point clientPoint, bool mouseDown = true, bool mouseUp = true, bool leftButton = true)
             {
                 var oldPos = Cursor.Position;
 
@@ -259,17 +261,17 @@ namespace Automation
                     inputMouseUp.Data.Mouse.Flags = 0x00010; /// left button up
                 }
 
+                List<INPUT> inputs = new List<INPUT>();
+                if (mouseDown)
+                {
+                    inputs.Add(inputMouseDown);
+                }
                 if (mouseUp)
                 {
-                    var inputs = new INPUT[] { inputMouseDown, inputMouseUp };
-                    SendInput((uint)inputs.Length, inputs, Marshal.SizeOf(typeof(INPUT)));
+                    inputs.Add(inputMouseUp);
                 }
-                else
-                {
-                    var inputs = new INPUT[] { inputMouseDown};
-                    SendInput((uint)inputs.Length, inputs, Marshal.SizeOf(typeof(INPUT)));
-                }
-
+                if(inputs.Count > 0)
+                    SendInput((uint)inputs.Count, inputs.ToArray(), Marshal.SizeOf(typeof(INPUT)));
                 /// return mouse 
                 Cursor.Position = oldPos;
             }

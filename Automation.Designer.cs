@@ -34,10 +34,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.NUDDelayRiver = new System.Windows.Forms.NumericUpDown();
-            this.NUDDelay = new System.Windows.Forms.NumericUpDown();
+            this.NUDDelayCopy = new System.Windows.Forms.NumericUpDown();
+            this.NUDDelayMouse = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUDDelayRiver)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUDDelay)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUDDelayCopy)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUDDelayMouse)).BeginInit();
             this.SuspendLayout();
             // 
             // TBResult
@@ -50,7 +53,7 @@
             this.TBResult.Multiline = true;
             this.TBResult.Name = "TBResult";
             this.TBResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.TBResult.Size = new System.Drawing.Size(803, 375);
+            this.TBResult.Size = new System.Drawing.Size(1087, 375);
             this.TBResult.TabIndex = 0;
             this.TBResult.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBResult_KeyDown);
             // 
@@ -60,7 +63,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnRun.Location = new System.Drawing.Point(15, 516);
             this.BtnRun.Name = "BtnRun";
-            this.BtnRun.Size = new System.Drawing.Size(803, 35);
+            this.BtnRun.Size = new System.Drawing.Size(1087, 35);
             this.BtnRun.TabIndex = 1;
             this.BtnRun.Text = "Run";
             this.BtnRun.UseVisualStyleBackColor = true;
@@ -71,12 +74,14 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.NUDDelayRiver);
-            this.groupBox1.Controls.Add(this.NUDDelay);
+            this.groupBox1.Controls.Add(this.NUDDelayMouse);
+            this.groupBox1.Controls.Add(this.NUDDelayCopy);
             this.groupBox1.Location = new System.Drawing.Point(15, 399);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(803, 111);
+            this.groupBox1.Size = new System.Drawing.Size(1087, 111);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
@@ -84,7 +89,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(409, 53);
+            this.label2.Location = new System.Drawing.Point(722, 48);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(213, 24);
             this.label2.TabIndex = 1;
@@ -95,13 +100,13 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(32, 51);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(141, 24);
+            this.label1.Size = new System.Drawing.Size(132, 24);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Delay for Action";
+            this.label1.Text = "Delay for Copy";
             // 
             // NUDDelayRiver
             // 
-            this.NUDDelayRiver.Location = new System.Drawing.Point(628, 51);
+            this.NUDDelayRiver.Location = new System.Drawing.Point(941, 46);
             this.NUDDelayRiver.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -116,28 +121,54 @@
             0,
             0});
             // 
-            // NUDDelay
+            // NUDDelayCopy
             // 
-            this.NUDDelay.Location = new System.Drawing.Point(179, 51);
-            this.NUDDelay.Maximum = new decimal(new int[] {
+            this.NUDDelayCopy.Location = new System.Drawing.Point(179, 51);
+            this.NUDDelayCopy.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.NUDDelay.Name = "NUDDelay";
-            this.NUDDelay.Size = new System.Drawing.Size(120, 29);
-            this.NUDDelay.TabIndex = 0;
-            this.NUDDelay.Value = new decimal(new int[] {
+            this.NUDDelayCopy.Name = "NUDDelayCopy";
+            this.NUDDelayCopy.Size = new System.Drawing.Size(120, 29);
+            this.NUDDelayCopy.TabIndex = 0;
+            this.NUDDelayCopy.Value = new decimal(new int[] {
             100,
             0,
             0,
             0});
             // 
+            // NUDDelayMouse
+            // 
+            this.NUDDelayMouse.Location = new System.Drawing.Point(516, 51);
+            this.NUDDelayMouse.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.NUDDelayMouse.Name = "NUDDelayMouse";
+            this.NUDDelayMouse.Size = new System.Drawing.Size(120, 29);
+            this.NUDDelayMouse.TabIndex = 0;
+            this.NUDDelayMouse.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(369, 51);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(146, 24);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Delay for Mouse";
+            // 
             // Automation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(830, 563);
+            this.ClientSize = new System.Drawing.Size(1114, 563);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.BtnRun);
             this.Controls.Add(this.TBResult);
@@ -149,7 +180,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUDDelayRiver)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUDDelay)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUDDelayCopy)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUDDelayMouse)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -163,7 +195,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown NUDDelayRiver;
-        private System.Windows.Forms.NumericUpDown NUDDelay;
+        private System.Windows.Forms.NumericUpDown NUDDelayCopy;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown NUDDelayMouse;
     }
 }
 
