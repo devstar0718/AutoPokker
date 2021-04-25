@@ -32,15 +32,15 @@
             this.BtnRun = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.NUDDelayRiver = new System.Windows.Forms.NumericUpDown();
-            this.NUDDelayCopy = new System.Windows.Forms.NumericUpDown();
             this.NUDDelayMouse = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
+            this.NUDDelayCopy = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUDDelayRiver)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUDDelayCopy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUDDelayMouse)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUDDelayCopy)).BeginInit();
             this.SuspendLayout();
             // 
             // TBResult
@@ -95,6 +95,15 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Delay for Calculate River";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(369, 51);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(146, 24);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Delay for Mouse";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -121,23 +130,6 @@
             0,
             0});
             // 
-            // NUDDelayCopy
-            // 
-            this.NUDDelayCopy.Location = new System.Drawing.Point(179, 51);
-            this.NUDDelayCopy.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.NUDDelayCopy.Name = "NUDDelayCopy";
-            this.NUDDelayCopy.Size = new System.Drawing.Size(120, 29);
-            this.NUDDelayCopy.TabIndex = 0;
-            this.NUDDelayCopy.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            // 
             // NUDDelayMouse
             // 
             this.NUDDelayMouse.Location = new System.Drawing.Point(516, 51);
@@ -155,14 +147,22 @@
             0,
             0});
             // 
-            // label3
+            // NUDDelayCopy
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(369, 51);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(146, 24);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Delay for Mouse";
+            this.NUDDelayCopy.Location = new System.Drawing.Point(179, 51);
+            this.NUDDelayCopy.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.NUDDelayCopy.Name = "NUDDelayCopy";
+            this.NUDDelayCopy.Size = new System.Drawing.Size(120, 29);
+            this.NUDDelayCopy.TabIndex = 0;
+            this.NUDDelayCopy.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             // 
             // Automation
             // 
@@ -176,12 +176,11 @@
             this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Automation";
             this.Text = "Automation";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUDDelayRiver)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUDDelayCopy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUDDelayMouse)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUDDelayCopy)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

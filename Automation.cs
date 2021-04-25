@@ -52,12 +52,13 @@ namespace Automation
         }
         private void CopyAbsStrategyFromFlop()
         {
-            int x = 200, y = 700;
+            int x, y;
             for (int i = 0; i < 3; i++)
             {
-                x = 200;
+                y = 700 + 70 * i;
                 for (int j = 0; j < 13; j++)
                 {
+                    x = 200 + j * 50;
                     SelectSecondItemOnFlop();
                     CopyAbsStrategy();
                     SelectTurnCard(x, y);
@@ -67,19 +68,18 @@ namespace Automation
                     CopyAbsStrategy();
                     SendKeys.SendWait("{RIGHT}");
                     CopyAbsStrategyFromTurn();
-                    x += 50;
                 }
-                y += 70;
             }
         }
         private void CopyAbsStrategyFromTurn()
         {
-            int x = 250, y = 700;
+            int x, y;
             for(int i = 0; i < 3; i++)
             {
-                x = 250;
+                y = 700 + i * 70;
                 for(int j = 0; j < 13; j++)
                 {
+                    x = 270 + j * 50;
                     SelectSecondItemOnTurn();
                     CopyAbsStrategy();
                     SelectRiverCard(x, y);
@@ -89,9 +89,7 @@ namespace Automation
 
                     SelectFirstItemOnRiver();
                     CopyAbsStrategyFromRiver();
-                    x += 50;
                 }
-                y += 70;
             }
         }
         private void CopyAbsStrategyFromRiver()
