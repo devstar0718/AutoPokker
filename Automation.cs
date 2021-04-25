@@ -58,7 +58,7 @@ namespace Automation
                 y = 700 + 70 * i;
                 for (int j = 0; j < 13; j++)
                 {
-                    x = 200 + j * 50;
+                    x = 220 + j * 50;
                     SelectSecondItemOnFlop();
                     CopyAbsStrategy();
                     SelectTurnCard(x, y);
