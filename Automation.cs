@@ -38,7 +38,7 @@ namespace Automation
 
                 SelectFirstItemOnFlop();
                 SendKeys.SendWait("{DOWN}");
-                CopyAbsStrategy();
+                CopyStrategy();
                 SendKeys.SendWait("{RIGHT}");
                 CopyAbsStrategyFromFlop();
             }
@@ -60,12 +60,12 @@ namespace Automation
                 {
                     x = 220 + j * 50;
                     SelectSecondItemOnFlop();
-                    CopyAbsStrategy();
+                    CopyStrategy();
                     SelectTurnCard(x, y);
 
                     SelectFirstItemOnTurn();
                     SendKeys.SendWait("{DOWN}");
-                    CopyAbsStrategy();
+                    CopyStrategy();
                     SendKeys.SendWait("{RIGHT}");
                     CopyAbsStrategyFromTurn();
                 }
@@ -81,7 +81,7 @@ namespace Automation
                 {
                     x = 270 + j * 50;
                     SelectSecondItemOnTurn();
-                    CopyAbsStrategy();
+                    CopyStrategy();
                     SelectRiverCard(x, y);
                     SelectSecondItemOnTurn();
 
@@ -95,21 +95,24 @@ namespace Automation
         private void CopyAbsStrategyFromRiver()
         {
             SendKeys.SendWait("{DOWN}");
-            CopyAbsStrategy();
+            CopyStrategy();
             SendKeys.SendWait("{RIGHT}");
             SendKeys.SendWait("{DOWN}");
-            CopyAbsStrategy();
+            CopyStrategy();
             SendKeys.SendWait("{DOWN}");
+            CopyStrategy();
             SendKeys.SendWait("{RIGHT}");
             SendKeys.SendWait("{DOWN}");
-            CopyAbsStrategy();
-            for(int i = 0; i < 11; i++)
+            CopyStrategy();
+            for (int i = 0; i < 11; i++)
             {
+                
                 SendKeys.SendWait("{DOWN}");
                 SendKeys.SendWait("{DOWN}");
+                CopyStrategy();
                 SendKeys.SendWait("{RIGHT}");
                 SendKeys.SendWait("{DOWN}");
-                CopyAbsStrategy();
+                CopyStrategy();
             }
         }
         private void SelectApplication()
@@ -131,7 +134,7 @@ namespace Automation
             }
             SetForegroundWindow(hWnd);
         }
-        private void CopyAbsStrategy()
+        private void CopyStrategy()
         {
             if(hWnd != GetForegroundWindow())
             {
@@ -141,8 +144,7 @@ namespace Automation
             SendKeys.SendWait("{DOWN}");
             SendKeys.SendWait("{DOWN}");
             SendKeys.SendWait("{DOWN}");
-            SendKeys.SendWait("{DOWN}");
-            SendKeys.SendWait("{ENTER}");                                   // select 4th item on context menu - that's "Copy Abs. Strategy"
+            SendKeys.SendWait("{ENTER}");                                   // select 3rd item on context menu - that's "Copy Strategy"
             Thread.Sleep(Convert.ToInt32(NUDDelayCopy.Value));                                              // need to wait for copy data to clipboard
             strResult.AppendLine(Clipboard.GetText());
             strResult.AppendLine();
